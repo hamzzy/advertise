@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+</head>
+<body>
+<nav class="navbar" data-spy="affix" data-offset-top="197">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="font-size:30px;" >Classified</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'index'%}">Home</a></li>
+            {% for l in cato%}
+
+               <li><a href='/{{l.get_absolute_url}}'>{{l.name}}</a></li>
+
+            {%endfor%}
+
+            <li><a href="{%url 'post'%}">Post Ads </a></li>
+        </ul>
+          <form class="navbar-form navbar-left" method="GET" action="" >
+            <input type="text" class="form-control" name="he" value="{{request.GET.he}}" placeholder="Search..."/>
+              <input type="submit" class="btn btn-inverted " value="search"/>
+          </form>
+          {% if request.user.is_authenticated%}
+                <ul class="nav navbar-nav navbar-right">
+
+           <li><a href="{% url 'base' %}" >{{user.username}}<span class="glyphicon glyphicon-user"></span> </a></li>
+
+           <li><a href="{%url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+          {%else%}
+           <ul class="nav navbar-nav navbar-right">
+           <li><a href="{%url 'signup'%}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+           <li><a  class="btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+          {%endif%}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+   {% if cat %}
+{%for n in cat%}
+
+   <ul class="list-group">
+<li class="list-group-item"><a  href="{% url 'details' id=n.id  %}" class="text-left"><img src="/media/{{n.picture}}" width="200px"
+                                                                                           height="150px" alt="Generic placeholder thumbnail"></a>
+    <p class="text-right">{{n.name}}</p>
+    <p class="text-right"> ₦{{n.price}}</p>
+</li>
+
+</ul>
+
+{%endfor%}
+{%endif%}
+
+
+    <div class="pager">
+ <ul>
+{% if page.has_previous %}
+<li><a href="?page={{  page.previous_page_number }}">previous</a></li>
+{% endif %}
+
+<li>Page {{  page.number }} of {{ page.paginator.num_pages }}.</li>
+
+{% if page.has_next %}
+<li><a href="?page={{  page.next_page_number }}">next</a></li>
+{% endif %}
+
+    </ul>
+</div>
+
+
+
+</div>
+</body>
+</html>

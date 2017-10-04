@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+</head>
+<body>
+<nav class="navbar" data-spy="affix" data-offset-top="197">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="font-size:30px;" >Classified</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'index'%}">Home</a></li>
+          <li><a href="#">contact us</a></li>
+          <li><a href="#">About</a></li>
+            <li><a href="{%url 'post'%}">Post Ads </a></li>
+        </ul>
+          {% if request.user.is_authenticated%}
+                <ul class="nav navbar-nav navbar-right">
+
+           <li><a href="{% url 'base' %}" >{{user.username}}<span class="glyphicon glyphicon-user"></span> </a></li>
+
+           <li><a href="{%url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+          {%else%}
+           <ul class="nav navbar-nav navbar-right">
+           <li><a href="{%url 'signup'%}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+           <li><a  class="btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+          {%endif%}
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+<div class="col-md-8">
+<div class="panel panel-default" style=" margin-left:200px;
+height:100vh;border-radius:10px;">
+  <a  class="responsive-img"><img src="/media/{{post.picture}}"    width="100%" height="80%" alt="Generic placeholder thumbnail"></a>
+    <p>By:{{post.user}}</p>
+    <div class="panel panel-body">
+
+
+        </div>
+<ul class="list-group">
+<li class="list-group-item">NAME:{{post.name}}</li>
+<li class="list-group-item">PRICE:₦{{post.price}}</li>
+<li class="list-group-item">LOCATION:{{post.location}}</li>
+ <li class="list-group-item">DESCRIPTION:{{post.text}}</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+<script src="{% static '/js/bootstrap.min.js'%}"></script>
+<script src="{% static '/js/jquery.js'%}"></script>
+</body>
+</html>

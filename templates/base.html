@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{%load static%}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+</head>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "RobotoDraft", "Roboto", sans-serif;}
+.w3-bar-block .w3-bar-item{padding:16px}
+/* Set the sidenav to full-width when the screen is less than 600 pixels wide */
+@media (max-width: 500px) {
+  .w3-sidenav {
+      width: 100% !important;
+  }
+}
+</style>
+<body>
+
+
+
+ <h2></h2>
+
+
+{% if request.user.is_authenticated%}
+
+
+<nav class="w3-sidenav w3-collapse w3-white w3-animate-left w3-card-2" style="z-index:5;width:300px;">
+  <a href="#" class="w3-border-bottom w3-large">
+      <img class="w3-round w3-border w3-margin-right"  src="/media/{{obj.picture}}"  style="width:80%;">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-text-teal w3-hide-large w3-closenav w3-large">Close ×</a>
+ <a class="w3-border-bottom" href="{%url 'base' %}">Welcome {{user.username}}<span class="glyphicon glyphicon-user"></span></a>
+  <a class="w3-border-bottom" href="{% url 'index' %}"> <button class="btn btn"><span class="glyphicon glyphicon-home"></span> Home</button></a>
+
+ <a  class="w3-border-bottom"  href="{% url 'post' %}"> <button class="btn btn"><span class="glyphicon glyphicon-pencil"></span> Post Ads</button></a>
+    <a  class="w3-border-bottom"  href="{%url 'ads'%}"><button class="btn btn"><span class="glyphicon glyphicon-briefcase"></span> ads management</button></a>
+      <a  class="w3-border-bottom"   href="{%url 'profile_edit'%}"><button class="btn btn"><span class="glyphicon glyphicon-level-up"></span> Edit_profile</button></a>
+  <a class="w3-border-bottom" href="{%url 'logout'%}"><button class="btn btn"><span class="glyphicon glyphicon-log-out"></span> Logout</button></a>
+
+</nav>
+
+<div id="main" style="margin-left:25%"> <!-- Start main -->
+<br>
+
+<div class="w3-row-padding">
+      <span class="w3-opennav w3-xlarge" onclick="w3_open()" style="display:none">☰</span>
+    </div>
+     <div class="w3-container w3-border">
+
+
+         <h1 class="w3-border-bottom">Username:{{user.username}}</h1>
+
+        <h1 class="w3-border-bottom">Location:{{obj.location}}</h1>
+        <h1 class="w3-border-bottom">Email:{{user.email}}</h1>
+          <h1 class="w3-border-bottom">Phone-No:{{obj.phone}}</h1>
+
+
+
+
+         <form method="post" enctype="multipart/form-data">
+             {%csrf_token%}
+
+             {{form|crispy}}
+             <input class="btn btn-danger"  type="submit" value="Load">
+         </form>
+
+      </div>
+
+
+
+
+  </div>
+
+
+{%endif%}
+ <script src="{% static '/js/jquery.js'%}"></script>
+<script src="{% static '/js/bootstrap.min.js'%}"></script>
+
+<script>
+function w3_open() {
+  document.getElementById("main").style.marginLeft = "25%"
+  document.getElementsByClassName("w3-sidenav")[0].style.width ="25%";
+  document.getElementsByClassName("w3-sidenav")[0].style.display = "block";
+  document.getElementsByClassName("w3-opennav")[0].style.display = 'none';
+}
+function w3_close() {
+  document.getElementById("main").style.marginLeft = "0%";
+  document.getElementsByClassName("w3-sidenav")[0].style.display = "none";
+  document.getElementsByClassName("w3-opennav")[0].style.display = "inline-block";
+}
+</script>
+
+</body>
+</html>

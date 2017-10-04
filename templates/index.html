@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classified</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+</head>
+
+<style>
+    body{
+    position:relative;
+    margin:0;
+    }
+   .affix {
+      top: 0;
+      width: 100%;
+  }
+
+  .affix + .container-fluid {
+      padding-top: 70px;
+  }
+    .navbar {
+      margin-bottom: 0px;
+      padding:20px;
+      border-radius:0px;
+      background-color:#F0F0F0  ;
+  }
+ .carousel-inner img {
+    -webkit-filter: grayscale(90%);
+    filter: grayscale(90%); /* make all photos black and white */
+    width: 100%; /* Set width to 100% */
+    margin: auto;
+}
+
+.carousel-caption h3 {
+    color: #fff !important;
+}
+
+@media (max-width: 600px) {
+    .carousel-caption {
+        display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+}
+   footer {
+	  background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    button{
+     text-align:center;
+    }
+</style>
+<body  data-target=".navbar" data-offset="50">
+
+<div class="container-fluid text-center " style="background-image:url('static/img/l.jpg');
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-size:cover;
+color:#fff;height:200px;">
+    <h1 class=""  style="font-weight:30px;">Welcome to oya sell</h1>
+ <h3 class=""  style="font-variant: small-caps;">Sell Faster &amp Sell Smater</h3>
+    <div class="">
+    {%for c in cat%}
+   <a href="{{c.get_absolute_url}}"> <button class="btn btn text-center " style="font-variant: small-caps;">{{c.name}} </button></a>
+
+        {%endfor%}
+    </div>
+
+
+</div>
+
+<nav class="navbar" data-spy="affix" data-offset-top="197">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="font-size:30px;" >Classified</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+
+        </ul>
+           <form class="navbar-form navbar-left" method="GET" action="" >
+            <input type="text" class="form-control" name="q" value="" placeholder="Search..."/>
+              <input type="submit" class="btn btn-primary " value="search"/>
+          </form>
+
+          {% if request.user.is_authenticated%}
+                <ul class="nav navbar-nav navbar-right">
+
+           <li><a href="{% url 'base' %}" >{{user.username}}<span class="glyphicon glyphicon-user"></span> </a></li>
+
+           <li><a href="{%url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+          {%else%}
+           <ul class="nav navbar-nav navbar-right">
+           <li><a href="{%url 'signup'%}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+           <li><a  class="btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+          {%endif%}
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+       <form role="form" method="post">
+           {%csrf_token%}
+            <div class="form-group">
+    <label for="pwd">username:</label>
+    <input type="text" name="username" class="form-control" >
+  </div>
+
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" name="password" class="form-control" id="pwd">
+  </div>
+
+   <input type="submit"  value="Login" class="btn btn-danger">
+           <p class="text-right"><a href="{% url 'signup'%}">if not  registered click ?</a></p>
+
+       </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<br/>
+
+<div class="container">
+
+   <img class="mySlides" src="{%static 'img/raw.jpg'%}" height="500px" width="100%">
+    <img class="mySlides" src="{%static 'img/ra.jpg'%}"  height="500px" width="100%">
+    <img class="mySlides" src="{%static 'img/python.png'%}" height="500px" width="100%">
+
+</div>
+<br/>
+<br/>
+<div class="container w3-animate-fading">
+    <div class="page-header">
+    <div class="w3-tag w3-jumbo">L</div>
+    <div class="w3-tag w3-jumbo">A</div>
+    <div class="w3-tag w3-jumbo">T</div>
+     <div class="w3-tag w3-jumbo">E</div>
+        <div class="w3-tag w3-jumbo">S</div>
+        <div class="w3-tag w3-jumbo">T</div>
+        <div class="w3-tag w3-jumbo" >A</div>
+        <div class="w3-tag w3-jumbo " >D</div>
+        <div class="w3-tag w3-jumbo ">S</div>
+</div>
+</div>
+
+<div class="container">
+  <div class=" w3-row">
+        {%for c in query%}
+       <div class="w3-col m5 l3">
+
+<div class="w3-card-8" style="width:90%;height:50%;">
+  <a href="{% url 'details' id=c.id  %}" ><img class="w3-round w3-border" src="/media/{{c.picture}}" width="100%" height="300px"   alt="Image"></a>
+    <br/>
+  <div class="w3-container  w3-amber w3-center">
+     <p>{{c.name}}</p>
+    <p> ₦{{c.price}}</p>
+  </div>
+</div>
+       </div>
+
+{%endfor%}
+
+  </div>
+
+
+</div>
+
+
+
+    <div class="pager">
+ <ul>
+{% if page.has_previous %}
+<li><a href="?page={{  page.previous_page_number }}">previous</a></li>
+{% endif %}
+
+<li>Page {{  page.number }} of {{ page.paginator.num_pages }}.</li>
+
+{% if page.has_next %}
+<li><a href="?page={{  page.next_page_number }}">next</a></li>
+{% endif %}
+
+    </ul>
+</div>
+
+<br><br>
+
+
+<footer class="container-fluid text-center">
+  <p>Copyright @hamzat</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+<script src="{% static '/js/jquery.js'%}"></script>
+<script src="{% static '/js/bootstrap.min.js'%}"></script>
+
+
+<script>
+
+    var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "block";
+    setTimeout(carousel, 5000);
+}
+
+</script>
+
+</body>
+</html>
